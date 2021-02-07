@@ -1,0 +1,48 @@
+{
+  "name": "line-merge",
+  "version": "1.0.0",
+  "publisher": "mafumafuultu",
+  "description": "Delete duplicate lines in the selected range.",
+  "engines": {
+    "vscode": "^1.53.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.53.0"
+  },
+  "activationEvents": [
+    "onCommand:extension.linemerge.linemerge"
+  ],
+  "main": "extention.js",
+  "contributes": {
+    "commands": [
+      {
+        "title": "line merge",
+        "command": "extension.linemerge.linemerge",
+        "category": "Editor"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "alt+m",
+        "command": "extension.linemerge.linemerge",
+        "when": "editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mafumafuultu/linemerge.git"
+  },
+  "keywords": [
+    "vscode",
+    "edit",
+    "line-merge"
+  ],
+  "author": "mafumafuultu <mafumafuultuforit@gmail.com> (https://github.com/mafumafuultu)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mafumafuultu/linemerge/issues"
+  },
+  "homepage": "https://github.com/mafumafuultu/linemerge#readme"
+}
