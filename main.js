@@ -27,7 +27,7 @@ function activate(context) {
 			);
 
 			const originalLines = txt.slice(st, en - st + 1);
-			const replacedLines = originalLines.filter((v, i, a) => a.indexOf(v) === i);
+			const replacedLines = Array.from(new Set(originalLines));
 			e.replace(range, replacedLines.join(eol));
 
 			const cnt = originalLines.length - replacedLines.length;
