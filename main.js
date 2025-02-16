@@ -17,24 +17,27 @@ function activate(context) {
 		}
 		const st = selection.start.line,
 			en = selection.end.line;
-		const st_r = document.lineAt(st).range,
-			en_r = document.lineAt(en).range;
 
+		const originalLines = txt.slice(st, en - st + 1);
+		const replacedLines = originalLines.filter((v, i, a) => a.indexOf(v) === i);
+		const mergedLineCount = originalLines.length - replacedLines.length;
+
+		// quit if no lines are merged
+		if (mergedLineCount === 0) {
+			vscode.window.showInformationMessage("No lines are merged");
+			return;
+		}
+
+		// update text if merged any lines
 		vscode.window.activeTextEditor.edit(e => {
+			const st_r = document.lineAt(st).range,
+				en_r = document.lineAt(en).range;
 			const range = new vscode.Range(
 				new vscode.Position(st_r.start.line, st_r.start.character),
 				new vscode.Position(en_r.start.line, en_r.end.character)
 			);
-
-			const originalLines = txt.slice(st, en - st + 1);
-			const replacedLines = originalLines.filter((v, i, a) => a.indexOf(v) === i);
 			e.replace(range, replacedLines.join(eol));
-
-			const cnt = originalLines.length - replacedLines.length;
-			vscode.window.showInformationMessage(
-				cnt > 0
-					? `Merged ${cnt} lines`
-					: "No lines are merged");
+			vscode.window.showInformationMessage(`Merged ${mergedLineCount} lines`);
 		}, {});
 	});
 
