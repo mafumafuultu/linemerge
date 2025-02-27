@@ -1,6 +1,6 @@
 {
   "name": "line-merge",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "mafumafuultu",
   "description": "Delete duplicate lines in the selected range.",
   "engines": {
@@ -8,7 +8,7 @@
   },
   "icon": "line-merge.png",
   "devDependencies": {
-    "@types/vscode": "^1.91.0"
+    "@types/vscode": "^1.97.0"
   },
   "activationEvents": [
     "onCommand:extension.linemerge.linemerge"

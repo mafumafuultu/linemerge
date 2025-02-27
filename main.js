@@ -9,33 +9,42 @@ function activate(context) {
 	const command = 'extension.linemerge.linemerge';
 
 	let disposable = vscode.commands.registerCommand(command, () => {
-		const { document, selection } = vscode.window.activeTextEditor;
-		const txt = document.getText().split(/\r?\n/);
-		const eol = document.eol === 1 ? '\r\n' : '\n';
+		const editor = vscode.window.activeTextEditor;
+		if (!editor) {
+			return;
+		}
+
+		const { document, selection } = editor;
 		if (selection.isEmpty || selection.isSingleLine) {
 			return;
 		}
+
+		const txt = document.getText().split(/\r?\n/);
+		const eol = document.eol === vscode.EndOfLine.CRLF ? '\r\n' : '\n';
 		const st = selection.start.line,
 			en = selection.end.line;
-		const st_r = document.lineAt(st).range,
-			en_r = document.lineAt(en).range;
 
-		vscode.window.activeTextEditor.edit(e => {
-			const range = new vscode.Range(
-				new vscode.Position(st_r.start.line, st_r.start.character),
-				new vscode.Position(en_r.start.line, en_r.end.character)
-			);
+		const range = new vscode.Range(
+			new vscode.Position(st, 0),
+			new vscode.Position(en, document.lineAt(en).range.end.character)
+		);
 
-			const originalLines = txt.slice(st, en - st + 1);
-			const replacedLines = originalLines.filter((v, i, a) => a.indexOf(v) === i);
+		const originalLines = txt.slice(st, en - st + 1);
+		const replacedLines = Array.from(new Set(originalLines));
+		const cnt = originalLines.length - replacedLines.length;
+
+		if (cnt === 0) {
+			vscode.window.showInformationMessage("No lines are merged");
+			return;
+		}
+
+		editor.edit(e => {
 			e.replace(range, replacedLines.join(eol));
-
-			const cnt = originalLines.length - replacedLines.length;
-			vscode.window.showInformationMessage(
-				cnt > 0
-					? `Merged ${cnt} lines`
-					: "No lines are merged");
-		}, {});
+		}).then(success => {
+			if (success) {
+				vscode.window.showInformationMessage(`Merged ${cnt} lines`);
+			}
+		});
 	});
 
 	context.subscriptions.push(disposable);
