@@ -1,6 +1,8 @@
 # line merge
 
-![](https://img.shields.io/static/v1?label=vscode&message=^1.71.0&color=blue)
+![](https://img.shields.io/static/v1?label=version&message=1.0.5&color=orange)
+![](https://img.shields.io/static/v1?label=vscode&message=^1.97.0&color=blue)
+
 
 Delete duplicate rows in a selection without sorting.
 
