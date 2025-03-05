@@ -1,10 +1,10 @@
 {
   "name": "line-merge",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "publisher": "mafumafuultu",
   "description": "Delete duplicate lines in the selected range.",
   "engines": {
-    "vscode": "^1.91.0"
+    "vscode": "^1.97.0"
   },
   "icon": "line-merge.png",
   "devDependencies": {

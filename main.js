@@ -29,7 +29,7 @@ function activate(context) {
 			new vscode.Position(en, document.lineAt(en).range.end.character)
 		);
 
-		const originalLines = txt.slice(st, en - st + 1);
+		const originalLines = txt.slice(st, en + 1);
 		const replacedLines = Array.from(new Set(originalLines));
 		const cnt = originalLines.length - replacedLines.length;
 
